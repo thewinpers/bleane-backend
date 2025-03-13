@@ -79,26 +79,26 @@ module.exports.registerWithEmail = async (req, res, next) => {
       }
     }
 
-    // if (!user.isEmailVerified()) {
-    //   // Construct verification email
-    //   const host = req.get("host");
-    //   const protocol =
-    //     host.split(":")[0] === "localhost" ? "http://" : "https://";
-    //   const endpoint = "/api/users/email/verify/fast";
-    //   const code = user.getCode("email");
-    //   const token = user.genAuthToken();
-    //   const verificationLink = `${protocol}${host}${endpoint}?code=${code}&token=${token}`;
+    if (!user.isEmailVerified()) {
+      // Construct verification email
+      const host = req.get("host");
+      const protocol =
+        host.split(":")[0] === "localhost" ? "http://" : "https://";
+      const endpoint = "/api/users/email/verify/fast";
+      const code = user.getCode("email");
+      const token = user.genAuthToken();
+      const verificationLink = `${protocol}${host}${endpoint}?code=${code}&token=${token}`;
 
-    //   // Send register email with email verification code
-    //   // if user is joining for the first time
-    //   await emailService.sendVerificationCodeEmail(
-    //     user.getLanguage(),
-    //     user.getEmail(),
-    //     user.getCode("email"),
-    //     user.getName(),
-    //     verificationLink
-    //   );
-    // }
+      // Send register email with email verification code
+      // if user is joining for the first time
+      await emailService.sendVerificationCodeEmail(
+        user.getLanguage(),
+        user.getEmail(),
+        user.getCode("email"),
+        user.getName(),
+        verificationLink
+      );
+    }
   } catch (err) {
     next(err);
   }
