@@ -16,16 +16,12 @@ module.exports.getStripePublishableKey = () => {
   }
 };
 
-module.exports.createPaymentIntent = async (currency = "USD", amount, user) => {
+module.exports.createPaymentIntent = async (currency = "USD", amount) => {
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       currency,
       amount: amount * 100,
       automatic_payment_methods: { enabled: true },
-      receipt_email: user.email,
-      shipping: {
-        name: user.name,
-      },
     });
 
     return paymentIntent.client_secret;

@@ -16,8 +16,7 @@ module.exports.createInvoice = async (req, res, next) => {
 
     const clientSecret = await paymentService.createPaymentIntent(
       invoice.currency,
-      invoice.amount,
-      user
+      invoice.amount
     );
 
     // Create the response object
